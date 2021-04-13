@@ -8,7 +8,7 @@ namespace HistoryData
   {
     static async Task Main(string[] args)
     {
-      var a=await ApiClient.test();
+      var a = await ApiClient.RetriveHistoryData("161005", 10);
       Console.WriteLine(a);
     }
   }

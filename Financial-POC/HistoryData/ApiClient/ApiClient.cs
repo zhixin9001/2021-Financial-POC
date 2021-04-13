@@ -6,14 +6,13 @@ namespace HistoryData
 
   public class ApiClient
   {
-    public static async Task<string> test()
-    {
+    private static HttpClient httpClient = HttpClientFactory.Create();
 
-      var a =HttpClientFactory.Create();
-      a.BaseAddress =new Uri("https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code=161005&per=2&page=1");
-      var b=  await a.GetAsync("");
-      return await b.Content.ReadAsStringAsync();
+    public static async Task<string> RetriveHistoryData(string code, int page, int per = 10)
+    {
+      httpClient.BaseAddress = new Uri("https://fundf10.eastmoney.com/F10DataApi.aspx");
+      var responseMessage = await httpClient.GetAsync($"?type=lsjz&code={code}&per={per}&page={page}");
+      return await responseMessage.Content.ReadAsStringAsync();
     }
-    
   }
 }
