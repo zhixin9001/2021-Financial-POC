@@ -8,8 +8,11 @@ namespace HistoryData
   {
     static async Task Main(string[] args)
     {
-      var a = await ApiClient.RetriveHistoryData("161005", 10);
-      Console.WriteLine(a);
+      var apiResponse = await ApiClient.RetriveHistoryData("161005", 10, 2);
+      Console.WriteLine(apiResponse);
+      //暂无数据
+      var dataProcesser= new DataProcesser();
+      dataProcesser.ExtractRows(apiResponse);
     }
   }
 }
