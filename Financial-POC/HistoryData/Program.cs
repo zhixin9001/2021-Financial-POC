@@ -3,16 +3,13 @@
 namespace HistoryData
 {
   using System.Threading.Tasks;
-
+//https://fundf10.eastmoney.com/F10DataApi.aspx?type=lsjz&code=161005&per=10&page=1
   class Program
   {
     static async Task Main(string[] args)
     {
-      var apiResponse = await ApiClient.RetriveHistoryData("161005", 10, 2);
-      Console.WriteLine(apiResponse);
-      //暂无数据
-      var dataProcesser= new DataProcesser();
-      dataProcesser.ExtractRows(apiResponse);
+    //  await DownloadController.Begin("161005","富国天慧161005");
+     await DownloadController.Begin("519671","银河沪深300-519671");
     }
   }
 }

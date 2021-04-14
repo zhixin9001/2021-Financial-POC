@@ -11,6 +11,8 @@ namespace HistoryData
     static ApiClient()
     {
       httpClient = HttpClientFactory.Create();
+      
+      httpClient.BaseAddress = new Uri("https://fundf10.eastmoney.com/F10DataApi.aspx");
       // httpClient.DefaultRequestHeaders.Add("User-Agent",
       //   "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36");
       // httpClient.DefaultRequestHeaders.Add("Accept",
@@ -39,7 +41,6 @@ namespace HistoryData
       
     public static async Task<string> RetriveHistoryData(string code, int page, int per = 10)
     {
-      httpClient.BaseAddress = new Uri("https://fundf10.eastmoney.com/F10DataApi.aspx");
       var responseMessage = await httpClient.GetAsync($"?type=lsjz&code={code}&per={per}&page={page}");
       return await responseMessage.Content.ReadAsStringAsync();
     }
