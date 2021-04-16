@@ -13,24 +13,17 @@ namespace POC
       this.pathOfData = pathOfData;
     }
 
-    public string[][] Data { get; set; }
+    public List<string[]> Data { get; set; }=new List<string[]>();
 
     public void InitDB()
     {
-      var fundDayInfoList = new List<string[]>();
       using (StreamReader sr = new StreamReader(this.pathOfData))
       {
         string line;
         while ((line = sr.ReadLine()) != null)
         {
-          fundDayInfoList.Add(line.Split(","));
+          Data.Add(line.Split(","));
         }
-      }
-
-      if (fundDayInfoList.Count > 0)
-      {
-        Data = new string[fundDayInfoList.Count][];
-        fundDayInfoList.CopyTo(Data);
       }
     }
   }

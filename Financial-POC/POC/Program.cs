@@ -6,9 +6,20 @@ namespace POC
   {
     static void Main(string[] args)
     {
-      var db = new FundDayInfoDB("./data/fakeData.csv");
+      var db = new FundDayInfoDB(Consts.PathOfData);
       db.InitDB();
-      Console.WriteLine("Hello World!");
+      Console.WriteLine("DB inited");
+
+      var transaction=new Transaction();
+      var buyer=new Buyer(transaction);
+      var seller=new Seller(transaction);
+      
+      var scheduler = new Scheduler(db.Data, Consts.Perid);
+      scheduler.SchedulerPublisher += seller.TimeToHandle;
+      scheduler.SchedulerPublisher += buyer.TimeToHandle;
+      
+      Console.WriteLine($"Scheduler start running, {Consts.FromDate} - {Consts.EndDate}");
+      scheduler.BeginSchedule(Consts.FromDate,Consts.EndDate);
     }
   }
 }
