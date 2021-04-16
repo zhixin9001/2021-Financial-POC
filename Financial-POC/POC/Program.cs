@@ -6,6 +6,8 @@ namespace POC
   {
     static void Main(string[] args)
     {
+      var db = new FundDayInfoDB("./data/fakeData.csv");
+      db.InitDB();
       Console.WriteLine("Hello World!");
     }
   }
