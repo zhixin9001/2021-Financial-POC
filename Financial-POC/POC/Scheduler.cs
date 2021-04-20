@@ -3,16 +3,17 @@ namespace POC
   using System;
   using System.Collections.Generic;
   using System.Linq;
+  using System.Threading;
 
   public class Scheduler
   {
     private List<string[]> fundDayInfoDB;
-    private int minPeriod;
+    private int period;
 
-    public Scheduler(List<string[]> fundDayInfoDB, int minPeriod)
+    public Scheduler(List<string[]> fundDayInfoDB, int period)
     {
       this.fundDayInfoDB = fundDayInfoDB;
-      this.minPeriod = minPeriod;
+      this.period = period;
     }
 
     public delegate void TimeToHandle(FundDayInfo fundDayInfo);
@@ -23,20 +24,26 @@ namespace POC
     {
       var startIndex = GetIndexOfDate(fromDateStr);
       var endIndex = GetIndexOfDate(endDateStr);
-      if (startIndex < 0 || endIndex < 0)
+      if (startIndex < 0)
       {
-        throw new ArgumentException($"Has no record");
+        throw new ArgumentException($"Has no record of {fromDateStr}");
       }
 
-      if (startIndex - endIndex <= minPeriod)
+      if (endIndex < 0)
       {
-        throw new ArgumentException($"Period must greater than {minPeriod}");
+        throw new ArgumentException($"Has no record of {endDateStr}");
       }
 
-      for (int i = startIndex; i >= endIndex; i-=minPeriod)
+      if (startIndex - endIndex <= period)
+      {
+        throw new ArgumentException($"Period must greater than {period}");
+      }
+
+      for (int i = startIndex; i >= endIndex; i -= period)
       {
         var fundDayInfo = new FundDayInfo(fundDayInfoDB[i]);
         SchedulerPublisher?.Invoke(fundDayInfo);
+        // Thread.Sleep(100);
       }
     }
 

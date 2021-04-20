@@ -11,8 +11,8 @@ namespace POC
       Console.WriteLine("DB inited");
 
       var transaction=new Transaction();
-      var buyer=new Buyer(transaction);
-      var seller=new Seller(transaction);
+      var buyer=new RatioBuyer(transaction);
+      var seller=new BlockSeller(transaction);
       
       var scheduler = new Scheduler(db.Data, Consts.Perid);
       scheduler.SchedulerPublisher += seller.TimeToHandle;
@@ -20,6 +20,7 @@ namespace POC
       
       Console.WriteLine($"Scheduler start running, {Consts.FromDate} - {Consts.EndDate}");
       scheduler.BeginSchedule(Consts.FromDate,Consts.EndDate);
+      new Reporter(transaction).Run(buyer.GetType().Name,seller.GetType().Name,Consts.SellThreshold,Consts.Perid);
     }
   }
 }

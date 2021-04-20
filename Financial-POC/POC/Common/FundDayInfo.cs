@@ -26,10 +26,15 @@ namespace POC
     public decimal NAV { get; }
     public decimal AccNAV { get; }
     public decimal Amount { get; set; }
-    
     public decimal FundShares { get; set; }
     
     public decimal CurrentValue { get; set; }
     public decimal RateOfReturn { get; set; }
+    public decimal AnnualRateOfReturn { get; set; }
+    
+    public DateTime? SelledDate  { get; set; }
+    public int OwnedDays { get; set; }
+    public decimal ReturnAmount { get; set; }
+    
   }
 }
