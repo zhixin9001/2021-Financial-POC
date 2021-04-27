@@ -12,12 +12,13 @@ namespace POC
       this.transaction = transaction;
     }
 
-    public void Run(string buyer,string seller,decimal sellThreshold, int period)
+    public void Run(string buyer,string seller,decimal sellThreshold, int period,string fromDate, string endDate)
     {
       Console.WriteLine($"==================REPORT=========================");
       var totalInput = CalcTotalInput();
       var totalOutput = CalcTotalOutput();
       Console.WriteLine($"#### {buyer}-{seller}-{(sellThreshold*100).ToString()}%, period: {period}day");
+      Console.WriteLine($"{fromDate} ~ {endDate}");
       Console.WriteLine($"| BuyTimes | SellTimes | TotalInput | TotalOutput | FundGrowed | OwnRate |");
       Console.WriteLine($"| --- | --- | --- | --- | --- | --- |");
       Console.WriteLine($"| {CalcBuyTimes()} | {CalcSellTimes()} | {totalInput} | {totalOutput} | {CalcGrowing(transaction.Records.First().AccNAV,transaction.Records.Last().AccNAV)}% | {CalcGrowing(totalInput,totalOutput)}% |");

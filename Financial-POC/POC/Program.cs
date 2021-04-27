@@ -18,9 +18,11 @@ namespace POC
       scheduler.SchedulerPublisher += seller.TimeToHandle;
       scheduler.SchedulerPublisher += buyer.TimeToHandle;
       
-      Console.WriteLine($"Scheduler start running, {Consts.FromDate} - {Consts.EndDate}");
+      Console.WriteLine($"Scheduler start running, {Consts.FromDate} ~ {Consts.EndDate}");
       scheduler.BeginSchedule(Consts.FromDate,Consts.EndDate);
-      new Reporter(transaction).Run(buyer.GetType().Name,seller.GetType().Name,Consts.SellThreshold,Consts.Perid);
+      
+      Console.WriteLine($"{Consts.PathOfData}");
+      new Reporter(transaction).Run(buyer.GetType().Name,seller.GetType().Name,Consts.SellThreshold,Consts.Perid,Consts.FromDate, Consts.EndDate);
     }
   }
 }
