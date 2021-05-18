@@ -2,33 +2,27 @@ using System;
 
 namespace POC
 {
-  public abstract class Seller
-  {
-    private Transaction tranasction;
-
-    public Seller(Transaction transaction)
+    public abstract class Seller
     {
-      this.tranasction = transaction;
-    }
+        protected Transaction transaction;
+        protected decimal SellThreshold;
 
-    public void TimeToHandle(FundDayInfo fundDayInfo)
-    {
-      foreach (var record in tranasction.Records)
-      {
-        Sell(record, fundDayInfo);
-      }
-    }
+        public Seller(Transaction transaction, decimal sellThreshold)
+        {
+            this.transaction = transaction;
+            this.SellThreshold = sellThreshold;
+        }
 
-    public abstract void Sell(FundDayInfo record, FundDayInfo todayInfo);
+        public abstract void TimeToHandle(FundDayInfo fundDayInfo);
 
-    public decimal GetCurrentValue(decimal fundShares, decimal currentNav)
-    {
-      return decimal.Round(fundShares * currentNav, 2);
-    }
+        public decimal GetCurrentValue(decimal fundShares, decimal currentNav)
+        {
+            return decimal.Round(fundShares * currentNav, 2);
+        }
 
-    public decimal GetRateOfReturn(decimal originAmount, decimal currentValue)
-    {
-      return decimal.Round((currentValue - originAmount) / originAmount, 2);
+        public decimal GetRateOfReturn(decimal originAmount, decimal currentValue)
+        {
+            return decimal.Round((currentValue - originAmount) / originAmount, 2);
+        }
     }
-  }
 }

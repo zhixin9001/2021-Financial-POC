@@ -1,0 +1,32 @@
+[
+  {
+    "FromDate": "2006-2-7",
+    "EndDate": "2021-3-15",
+    "SellThreshold": 2.3,
+    "RangeType": "All"
+  },
+  {
+    "FromDate": "2018-5-23",
+    "EndDate": "2019-4-3",
+    "SellThreshold": 0.3,
+    "RangeType": "Smell"
+  },
+  {
+    "FromDate": "2018-12-19",
+    "EndDate": "2021-3-15",
+    "SellThreshold": 0.3,
+    "RangeType": "Up"
+  },
+  {
+    "FromDate": "2008-1-15",
+    "EndDate": "2008-11-11",
+    "SellThreshold": 0.3,
+    "RangeType": "Down"
+  },
+  {
+    "FromDate": "2009-11-19",
+    "EndDate": "2014-9-26",
+    "SellThreshold": 0.3,
+    "RangeType": "Upset"
+  }
+]

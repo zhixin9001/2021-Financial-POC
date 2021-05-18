@@ -12,16 +12,17 @@ namespace POC
       this.transaction = transaction;
     }
 
-    public void Run(string buyer,string seller,decimal sellThreshold, int period,string fromDate, string endDate)
+    public void Run(string buyer,string seller,decimal sellThreshold, int period,string fromDate, string endDate, string rangeType)
     {
       Console.WriteLine($"==================REPORT=========================");
       var totalInput = CalcTotalInput();
       var totalOutput = CalcTotalOutput();
+      var totalSelled = CalcSellAmount();
       Console.WriteLine($"#### {buyer}-{seller}-{(sellThreshold*100).ToString()}%, period: {period}day");
-      Console.WriteLine($"{fromDate} ~ {endDate}");
-      Console.WriteLine($"| BuyTimes | SellTimes | TotalInput | TotalOutput | FundGrowed | OwnRate |");
-      Console.WriteLine($"| --- | --- | --- | --- | --- | --- |");
-      Console.WriteLine($"| {CalcBuyTimes()} | {CalcSellTimes()} | {totalInput} | {totalOutput} | {CalcGrowing(transaction.Records.First().AccNAV,transaction.Records.Last().AccNAV)}% | {CalcGrowing(totalInput,totalOutput)}% |");
+      Console.WriteLine($"{rangeType} {fromDate} ~ {endDate}");
+      Console.WriteLine($"| BuyTimes | SellTimes | SellAmount| TotalInput | TotalOutput | FundGrowed | OwnRate |");
+      Console.WriteLine($"| --- | --- | --- | --- | --- | --- | --- |");
+      Console.WriteLine($"| {CalcBuyTimes()} | {CalcSellTimes()} | {totalSelled} | {totalInput} | {totalOutput} | {CalcGrowing(transaction.Records.First().AccNAV,transaction.Records.Last().AccNAV)}% | {CalcGrowing(totalInput,totalOutput+totalSelled)}% |");
     }
 
     public int CalcBuyTimes()
@@ -32,6 +33,11 @@ namespace POC
     public int CalcSellTimes()
     {
       return this.transaction.Records.Count(a => a.SelledDate.HasValue);
+    }
+
+    public decimal CalcSellAmount()
+    {
+      return this.transaction.Records.FindAll(a => a.SelledDate.HasValue).Sum(a=>a.CurrentValue);
     }
 
     public decimal CalcTotalInput()
